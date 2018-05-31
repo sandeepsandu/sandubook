@@ -6,12 +6,14 @@
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('admin/sale_model', 'sale_model');
+            $this->load->model('admin/bank_model', 'bank_model');
 		}
 
 		public function index(){
             $data['customer'] =  $this->sale_model->get_all_customers();
             $data['godown'] =  $this->sale_model->get_all_godowns();
             $data['paymodes'] =  $this->sale_model->get_all_paymodes();
+            $data['all_banks'] =  $this->bank_model->get_all_banks();
 			$data['view'] = 'admin/sale/sale_add';
 			$this->load->view('admin/layout', $data);
 		}
@@ -24,6 +26,7 @@
             $data['customer'] =  $this->sale_model->get_all_customers();
             $data['godown'] =  $this->sale_model->get_all_godowns();
             $data['paymodes'] =  $this->sale_model->get_all_paymodes();
+            $data['all_banks'] =  $this->bank_model->get_all_banks();
 			if($this->input->post('submit')){
 
 				$this->form_validation->set_rules('cust_name', 'Customer', 'trim|required');
@@ -34,6 +37,17 @@
 				$this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
                 $this->form_validation->set_rules('rate', 'Rate', 'trim|required');
                 $this->form_validation->set_rules('amount', 'Amount', 'trim|required');
+
+                $paymode=$this->input->post('paymentmode');
+                if($paymode==2)
+                {
+                    $bankid=$this->input->post('bankid');
+
+                }
+                else{
+                    $bankid="0" ;
+                }
+
 				if ($this->form_validation->run() == FALSE) {
 					$data['view'] = 'admin/sale/sale_add';
 					$this->load->view('admin/layout', $data);
@@ -49,6 +63,7 @@
                         'sale_rate' => $this->input->post('rate'),
                         'sale_amount' => $this->input->post('amount'),
                         'sale_paymode' => $this->input->post('paymentmode'),
+                        'sale_bankid' => $bankid,
                         'sale_recievedamount' => $this->input->post('amountpaid'),
 						'sale_addeddate' => date('Y-m-d'),
 
@@ -73,6 +88,7 @@
             $data['customer'] =  $this->sale_model->get_all_customers();
             $data['godown'] =  $this->sale_model->get_all_godowns();
             $data['paymodes'] =  $this->sale_model->get_all_paymodes();
+            $data['all_banks'] =  $this->bank_model->get_all_banks();
 			if($this->input->post('submit')){
                 $this->form_validation->set_rules('cust_name', 'Customer', 'trim|required');
                 $this->form_validation->set_rules('datepicker', 'Date', 'trim|required');
@@ -82,6 +98,17 @@
                 $this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
                 $this->form_validation->set_rules('rate', 'Rate', 'trim|required');
                 $this->form_validation->set_rules('amount', 'Amount', 'trim|required');
+
+                $paymode=$this->input->post('paymentmode');
+                if($paymode==2)
+                {
+                    $bankid=$this->input->post('bankid');
+
+                }
+                else{
+                    $bankid="0" ;
+                }
+
 				if ($this->form_validation->run() == FALSE) {
 					$data['user'] = $this->sale_model->get_sale_by_id($id);
 					$data['view'] = 'admin/sale/sale_edit';
@@ -97,6 +124,7 @@
                         'sale_rate' => $this->input->post('rate'),
                         'sale_amount' => $this->input->post('amount'),
                         'sale_paymode' => $this->input->post('paymentmode'),
+                        'sale_bankid' => $bankid,
                         'sale_recievedamount' => $this->input->post('amountpaid'),
                         'sale_updatedate' => date('Y-m-d'),
 					);

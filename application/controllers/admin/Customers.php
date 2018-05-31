@@ -106,6 +106,14 @@
 			$this->session->set_flashdata('msg', 'Record is Deleted Successfully!');
 			redirect(base_url('admin/customers'));
 		}
+        public function GetCountryName(){
+
+            if (isset($_GET['accname'])){
+                $q = strtolower($_GET['accname']);
+                $this->customer_model->GetRow($q);
+            }
+            $this->customer_model->GetRow('');
+        }
 
 	}
 

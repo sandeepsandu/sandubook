@@ -5,6 +5,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">Add New NSD</h3>
         </div>
+          <a class="btn btn-info btn-flat" href="<?php echo base_url();?>admin/nsd/nsd_list">View NSD</a>
         <!-- /.box-header -->
         <!-- form start -->
         <div class="box-body my-form-body">
@@ -131,7 +132,7 @@ $('#purrate,#salerate,#qty').change(function(){
     $('#puramount').val(puramt);
 });
 
-
+$("#datepicker").datepicker("setDate", new Date());
 
 
 </script>

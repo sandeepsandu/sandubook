@@ -47,7 +47,7 @@
                   <button class="add_field_button">Add More</button>
                   <table>
                       <tr>
-                    <td><input type="text" name="accname[]" placeholder="Name" class="form-control">
+                    <td><input type="text" name="accname[]" id="accname" placeholder="Name" class="form-control">
                       <td>  <input type="text" name="desc[]" placeholder="Description" class="form-control">
                       <td>  <select name="paymenttype[]" class="form-control"><option value="1">Paid</option><option value="2">Recieved</option></select>
                       <td>  <input type="text" name="amount[]" placeholder="Amount" class="form-control">
@@ -101,4 +101,10 @@ e.preventDefault(); $(this).parent('div').remove(); x--;
 })
 });
 
+</script>
+<script>
+
+    $("#accname").autocomplete({
+        source:  '<?php echo base_url();?>admin/customers/GetCountryName',
+    });
 </script>

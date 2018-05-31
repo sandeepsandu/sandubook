@@ -83,7 +83,7 @@
 				else{
 					$data = array(
                         'led_gpid' => $this->input->post('ledgergpid'),
-                        'led_date' => date("Y-m-d", strtotime($this->input->post('datepicker'))),
+                        'led_date' =>date("Y-m-d", strtotime($this->input->post('datepicker'))),
                         'led_desc' => $this->input->post('description'),
                         'led_amount' => $this->input->post('amount'),
                         'led_paymode' => $this->input->post('paymentmode'),

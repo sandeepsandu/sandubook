@@ -26,7 +26,7 @@
                     <select name="suplr_name" class="form-control">
                         <?php
                         foreach($supplier as $each)
-                        { ?><option value="<?php echo $each['suplr_id']; ?>"  <?php if($user['nsd_suplr_id']==$each['cust_id']) echo 'selected="selected"'; ?>><?php echo $each['suplr_name']; ?></option>';
+                        { ?><option value="<?php echo $each['suplr_id']; ?>"  <?php if($user['nsd_suplr_id']==$each['suplr_id']) echo 'selected="selected"'; ?>><?php echo $each['suplr_name']; ?></option>';
                         <?php }
                         ?>
                     </select>
@@ -51,7 +51,7 @@
                 <label for="email" class="col-sm-2 control-label">Date</label>
 
                 <div class="col-sm-5">
-                    <input type="text" name="datepicker" value="<?=$user['nsd_date'];?>" class="form-control" id="datepicker" placeholder="">
+                    <input type="text" name="datepicker" value="<?=date("d-m-Y", strtotime($user['nsd_date']));?>" class="form-control" id="datepicker" placeholder="">
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                 <label for="mobile_no" class="col-sm-3 control-label">Sale Amount</label>
 
                 <div class="col-sm-2">
-                    <input type="number" step=".01" name="saleamount" value="<?=$user['nsd_saleamount'];?>" class="form-control" id="saleamount" placeholder="">
+                    <input type="number" step=".01" name="saleamount" readonly value="<?=$user['nsd_saleamount'];?>" class="form-control" id="saleamount" placeholder="">
                 </div>
             </div>
 

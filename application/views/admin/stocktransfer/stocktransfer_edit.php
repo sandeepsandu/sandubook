@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Stock Transfer</h3>
+                    <h3 class="box-title">Edit Stock Transfer</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -17,7 +17,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <?php echo form_open(base_url('admin/stocktransfer/add'), 'class="form-horizontal"');  ?>
+                    <?php echo form_open(base_url('admin/stocktransfer/edit/'.$user['st_id']), 'class="form-horizontal"');  ?>
 
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">Transfer From</label>
@@ -26,7 +26,7 @@
                             <select name="transfer_from" id="transfer_from" class="form-control">
                                 <?php
                                 foreach($godownlist as $each)
-                                { ?><option value="<?php echo $each['godown_id']; ?>"><?php echo $each['godown_name']; ?></option>';
+                                { ?><option value="<?php echo $each['godown_id']; ?>" <?php if($user['st_from']==$each['godown_id']) echo 'selected="selected"'; ?>><?php echo $each['godown_name']; ?></option>';
                                 <?php }
                                 ?>
                             </select>
@@ -47,7 +47,7 @@
                             <select name="transfer_to" id="transfer_to" class="form-control">
                                 <?php
                                 foreach($godownlist as $each)
-                                { ?><option value="<?php echo $each['godown_id']; ?>"><?php echo $each['godown_name']; ?></option>';
+                                { ?><option value="<?php echo $each['godown_id']; ?>" <?php if($user['st_to']==$each['godown_id']) echo 'selected="selected"'; ?>><?php echo $each['godown_name']; ?></option>';
                                 <?php }
                                 ?>
                             </select>
@@ -65,7 +65,7 @@
                         <label for="email" class="col-sm-2 control-label">Date</label>
 
                         <div class="col-sm-5">
-                            <input type="text" name="datepicker" class="form-control" id="datepicker" placeholder="">
+                            <input type="text" name="datepicker"  value="<?=date("d-m-Y", strtotime($user['st_date']));?>"  class="form-control" id="datepicker" placeholder="">
                         </div>
                     </div>
 
@@ -74,19 +74,19 @@
                         <label for="email" class="col-sm-2 control-label">Description</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" name="description" id="description" placeholder=""></textarea>
+                            <textarea class="form-control"  name="description" id="description" placeholder=""><?=$user['st_desc'];?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="mobile_no" class="col-sm-2 control-label">Qty</label>
 
                         <div class="col-sm-2">
-                            <input type="number" step=".01" name="qty" class="form-control" id="qty" placeholder="">
+                            <input type="number" step=".01" name="qty" class="form-control" id="qty" value="<?=$user['st_qty'];?>" placeholder="">
                         </div>
                     </div>
 
                         <div class="col-md-11">
-                            <input type="submit" name="submit" value="Add Stock Transfer" class="btn btn-info pull-right">
+                            <input type="submit" name="submit" value="Update Stock Transfer" class="btn btn-info pull-right">
                         </div>
                     </div>
                     <?php echo form_close( ); ?>
@@ -106,7 +106,7 @@
         format:"dd-mm-yyyy"
     });
     $("#transaction").addClass('active');
-    $("#datepicker").datepicker("setDate", new Date());
+
     function godownchange()
     {
 

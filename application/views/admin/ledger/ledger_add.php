@@ -5,7 +5,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">Add New Ledger</h3>
         </div>
-        <!-- /.box-header -->
+          <a class="btn btn-info btn-flat" href="<?php echo base_url();?>admin/ledger/ledger_list">View Ledger</a>
+
+          <!-- /.box-header -->
         <!-- form start -->
         <div class="box-body my-form-body">
           <?php if(isset($msg) || validation_errors() !== ''): ?>
@@ -99,4 +101,5 @@ $('#datepicker').datepicker({
     todayHighlight: true,
     format:'dd-mm-yyyy'
 });
+    $("#datepicker").datepicker("setDate", new Date());
 </script>    

@@ -5,9 +5,12 @@
         <div class="box-header with-border">
           <h3 class="box-title">Add New Purchase</h3>
         </div>
+          <a class="btn btn-info btn-flat" href="<?php echo base_url();?>admin/purchase/purchase_list">View Purchase</a>
+
         <!-- /.box-header -->
         <!-- form start -->
         <div class="box-body my-form-body">
+
           <?php if(isset($msg) || validation_errors() !== ''): ?>
               <div class="alert alert-warning alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -35,7 +38,7 @@
                 <label for="firstname" class="col-sm-1 control-label">Date</label>
 
                 <div class="col-sm-3">
-                  <input type="text" name="datepicker" class="form-control" id="datepicker" placeholder="">
+                  <input type="text" name="datepicker" value="" class="form-control" id="datepicker" placeholder="">
                 </div>
               </div>
 
@@ -84,7 +87,7 @@
                 <label for="mobile_no" class="col-sm-2 control-label">Payment Mode</label>
 
                 <div class="col-sm-2">
-                    <select name="paymentmode" class="form-control">
+                    <select name="paymentmode" id="paymentmode" class="form-control">
                         <?php
                         foreach($paymodes as $each)
                         { ?><option value="<?php echo $each['pm_id']; ?>"><?php echo $each['pm_name']; ?></option>';
@@ -95,7 +98,20 @@
                 </div>
 
 
+<div id="bankbox">
+    <label for="mobile_no" class="col-sm-2 control-label">Bank Name</label>
+                <div class="col-sm-2" >
 
+                    <select name="bankid" class="form-control">
+                        <?php
+                        foreach($all_banks as $each)
+                        { ?><option value="<?php echo $each['bank_id']; ?>"><?php echo $each['bank_name']; ?></option>';
+                        <?php }
+                        ?>
+                    </select>
+
+                </div>
+</div>
                 <label for="mobile_no" class="col-sm-2 control-label">Amount Paid</label>
 
                 <div class="col-sm-2">
@@ -137,7 +153,18 @@ $("#transaction").addClass('active');
     })
     $('#datepicker').datepicker({
         autoclose: true,
-       format: "dd-mm-yyyy"
+       format: "dd-mm-yyyy",
     });
-
+    $("#datepicker").datepicker("setDate", new Date());
+    $('#bankbox').hide();
+    $("#paymentmode").change(function () {
+        var pmode = $('#paymentmode option:selected').val();
+        //alert(pmode);
+        if(pmode==2) {
+            $('#bankbox').show();
+        }else
+        {
+            $('#bankbox').hide();
+        }
+    });
 </script>

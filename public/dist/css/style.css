@@ -295,7 +295,7 @@ td.details table tr td, .dataTable tr:last-child {
 }
 .my-form-body{
     margin: 0 auto;
-    width: 70%;
+    width: 100%;
     padding-top: 40px;
 }
 label{

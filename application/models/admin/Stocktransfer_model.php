@@ -37,13 +37,13 @@ $this->db->where('purchase.pur_date <=', $to);
 }
 
         public function get_stocktransfer_by_id($id){
-			$query = $this->db->get_where('purchase', array('pur_id' => $id));
+			$query = $this->db->get_where('stock_transfer', array('st_id' => $id));
 			return $result = $query->row_array();
 		}
 
 		public function edit_stocktransfer($data, $id){
-			$this->db->where('pur_id', $id);
-			$this->db->update('purchase', $data);
+			$this->db->where('st_id', $id);
+			$this->db->update('stock_transfer', $data);
 			return true;
 		}
 
@@ -56,7 +56,17 @@ $this->db->where('purchase.pur_date <=', $to);
             $query = $this->db->get('bank');
             return $result = $query->result_array();
         }
+        public function get_tot_stock($g_id)
+        {
 
-	}
+
+            $query = $this->db->query('select distinct(select sum(pur_qty) from purchase where pur_godownid='.$g_id.')-(select sum(sale_qty) from sale where sale_godownid='.$g_id.') as totalqty
+from purchase ,sale');
+           // print_r($query->result_array());
+            return $result = $query->result_array();
+            //return $response;
+        }
+
+    }
 
 ?>

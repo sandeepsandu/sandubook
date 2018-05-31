@@ -35,7 +35,7 @@
                 <label for="firstname" class="col-sm-1 control-label">Date</label>
 
                 <div class="col-sm-3">
-                    <input type="text" name="datepicker" value="<?=$user['pur_date'];?>" class="form-control" id="datepicker" placeholder="">
+                    <input type="text" name="datepicker" value="<?=date("d-m-Y", strtotime($user['pur_date']));?>>" class="form-control" id="datepicker" placeholder="">
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
                 <label for="mobile_no" class="col-sm-2 control-label">Payment Mode</label>
 
                 <div class="col-sm-2">
-                    <select name="paymentmode" class="form-control">
+                    <select name="paymentmode" id="paymentmode" class="form-control">
                         <?php
                         foreach($paymodes as $each)
                         { ?><option value="<?php echo $each['pm_id']; ?>"  <?php if($user['pur_paymode']==$each['pm_id']) echo 'selected="selected"'; ?>><?php echo $each['pm_name']; ?></option>';
@@ -93,7 +93,20 @@
 
                 </div>
 
+                <div id="bankbox">
+                    <label for="mobile_no" class="col-sm-2 control-label">Bank Name</label>
+                    <div class="col-sm-2" >
 
+                        <select name="bankid" class="form-control">
+                            <?php
+                            foreach($all_banks as $each)
+                            { ?><option value="<?php echo $each['bank_id']; ?>" <?php if($user['pur_bankid']==$each['bank_id']) echo 'selected="selected"'; ?>><?php echo $each['bank_name']; ?></option>';
+                            <?php }
+                            ?>
+                        </select>
+
+                    </div>
+                </div>
 
                 <label for="mobile_no" class="col-sm-2 control-label">Amount Paid</label>
 
@@ -127,7 +140,25 @@
 
     $("#transaction").addClass('active');
     $('#datepicker').datepicker({
-        todayHighlight: true,
-        format:"dd-mm-yyyy"
+        autoclose: true,
+        format: "dd-mm-yyyy",
+    });
+
+   // $('#bankbox').hide();
+    function paymentmodechange()
+    {
+        var pmode = $('#paymentmode option:selected').val();
+        //alert(pmode);
+        if(pmode==2) {
+            $('#bankbox').show();
+        }else
+        {
+            $('#bankbox').hide();
+        }
+    }
+
+    $(function () {
+        paymentmodechange(); //this calls it on load
+        $("#paymentmode").change(paymentmodechange);
     });
 </script>

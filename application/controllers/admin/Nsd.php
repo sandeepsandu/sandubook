@@ -45,7 +45,7 @@
 
                         'nsd_cust_id' => $this->input->post('cust_name'),
                         'nsd_suplr_id' => $this->input->post('suplr_name'),
-						'nsd_date' => $this->input->post('datepicker'),
+						'nsd_date' => date("Y-m-d", strtotime($this->input->post('datepicker'))),
 						'nsd_desc' => $this->input->post('description'),
 						'nsd_qty' => $this->input->post('qty'),
                         'nsd_purrate' => $this->input->post('purrate'),
@@ -95,7 +95,7 @@
 					$data = array(
                         'nsd_cust_id' => $this->input->post('cust_name'),
                         'nsd_suplr_id' => $this->input->post('suplr_name'),
-                        'nsd_date' => $this->input->post('datepicker'),
+                        'nsd_date' =>date("Y-m-d", strtotime($this->input->post('datepicker'))),
                         'nsd_desc' => $this->input->post('description'),
                         'nsd_qty' => $this->input->post('qty'),
                         'nsd_purrate' => $this->input->post('purrate'),

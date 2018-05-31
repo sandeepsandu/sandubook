@@ -20,7 +20,7 @@
           <th>Transfer To</th>
             <th>Description</th>
           <th>Qty</th>
-
+<th>Option</th>
         </tr>
         </thead>
         <tbody>
@@ -34,8 +34,8 @@
             <td><?= $row['st_desc']; ?></td>
 
               <td><?= $row['st_qty']; ?></td>
-              
 
+      <td class="text-right"><a href="<?= base_url('admin/stocktransfer/edit/'.$row['st_id']); ?>" class="btn btn-info btn-flat">Edit</a><a onclick="return deletechecked();" href="<?= base_url('admin/stocktransfer/del/'.$row['st_id']); ?>" class="btn btn-danger btn-flat">Delete</a></td>
           </tr>
           <?php endforeach; ?>
         </tbody>

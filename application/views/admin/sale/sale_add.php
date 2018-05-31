@@ -5,6 +5,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">Add New Sale</h3>
         </div>
+          <a class="btn btn-info btn-flat" href="<?php echo base_url();?>admin/sale/sale_list">View Sales</a>
         <!-- /.box-header -->
         <!-- form start -->
         <div class="box-body my-form-body">
@@ -83,7 +84,7 @@
                 <label for="mobile_no" class="col-sm-2 control-label">Payment Mode</label>
 
                 <div class="col-sm-2">
-                    <select name="paymentmode" class="form-control">
+                    <select name="paymentmode" id="paymentmode" class="form-control">
                         <?php
                         foreach($paymodes as $each)
                         { ?><option value="<?php echo $each['pm_id']; ?>"><?php echo $each['pm_name']; ?></option>';
@@ -92,7 +93,20 @@
                     </select>
 
                 </div>
+                <div id="bankbox">
+                    <label for="mobile_no" class="col-sm-2 control-label">Bank Name</label>
+                    <div class="col-sm-2" >
 
+                        <select name="bankid" class="form-control">
+                            <?php
+                            foreach($all_banks as $each)
+                            { ?><option value="<?php echo $each['bank_id']; ?>"><?php echo $each['bank_name']; ?></option>';
+                            <?php }
+                            ?>
+                        </select>
+
+                    </div>
+                </div>
 
 
                 <label for="mobile_no" class="col-sm-2 control-label">Amount Recieved</label>
@@ -126,9 +140,20 @@
         $('#amount').val(amt);
     })
 $("#transaction").addClass('active');
-$('#datepicker').datepicker({
-    autoclose:true,
-    todayHighlight: true,
-    format: "dd-mm-yyyy"
-});
+    $('#datepicker').datepicker({
+        autoclose: true,
+        format: "dd-mm-yyyy",
+    });
+    $("#datepicker").datepicker("setDate", new Date());
+    $('#bankbox').hide();
+    $("#paymentmode").change(function () {
+        var pmode = $('#paymentmode option:selected').val();
+        //alert(pmode);
+        if(pmode==2) {
+            $('#bankbox').show();
+        }else
+        {
+            $('#bankbox').hide();
+        }
+    });
 </script>    

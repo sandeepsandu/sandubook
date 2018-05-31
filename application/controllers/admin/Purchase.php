@@ -6,12 +6,14 @@
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('admin/purchase_model', 'purchase_model');
+            $this->load->model('admin/bank_model', 'bank_model');
 		}
 
 		public function index(){
             $data['suplr'] =  $this->purchase_model->get_all_suppliers();
             $data['godown'] =  $this->purchase_model->get_all_godowns();
             $data['paymodes'] =  $this->purchase_model->get_all_paymodes();
+            $data['all_banks'] =  $this->bank_model->get_all_banks();
 			$data['view'] = 'admin/purchase/purchase_add';
 			$this->load->view('admin/layout', $data);
 		}
@@ -24,6 +26,7 @@
             $data['suplr'] =  $this->purchase_model->get_all_suppliers();
             $data['godown'] =  $this->purchase_model->get_all_godowns();
             $data['paymodes'] =  $this->purchase_model->get_all_paymodes();
+            $data['all_banks'] =  $this->bank_model->get_all_banks();
 			if($this->input->post('submit')){
 
 				$this->form_validation->set_rules('suplr_name', 'Supplier', 'trim|required');
@@ -34,6 +37,17 @@
 				$this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
                 $this->form_validation->set_rules('rate', 'Rate', 'trim|required');
                 $this->form_validation->set_rules('amount', 'Amount', 'trim|required');
+
+
+                $paymode=$this->input->post('paymentmode');
+                if($paymode==2)
+                {
+                    $bankid=$this->input->post('bankid');
+
+                }
+                else{
+                    $bankid="0" ;
+                }
 				if ($this->form_validation->run() == FALSE) {
 					$data['view'] = 'admin/purchase/purchase_add';
 					$this->load->view('admin/layout', $data);
@@ -49,6 +63,7 @@
                         'pur_rate' => $this->input->post('rate'),
 
                         'pur_paymode' => $this->input->post('paymentmode'),
+                        'pur_bankid' => $bankid,
                         'pur_payamount' => $this->input->post('amountrecieved'),
                         'pur_amount' => $this->input->post('amount'),
 						'pur_addeddate' => date('Y-m-d'),
@@ -74,6 +89,7 @@
             $data['suplr'] =  $this->purchase_model->get_all_suppliers();
             $data['godown'] =  $this->purchase_model->get_all_godowns();
             $data['paymodes'] =  $this->purchase_model->get_all_paymodes();
+            $data['all_banks'] =  $this->bank_model->get_all_banks();
 			if($this->input->post('submit')){
                 $this->form_validation->set_rules('suplr_name', 'Supplier', 'trim|required');
                 $this->form_validation->set_rules('datepicker', 'Date', 'trim|required');
@@ -83,6 +99,17 @@
                 $this->form_validation->set_rules('qty', 'Quantity', 'trim|required');
                 $this->form_validation->set_rules('rate', 'Rate', 'trim|required');
                 $this->form_validation->set_rules('amount', 'Amount', 'trim|required');
+                $paymode=$this->input->post('paymentmode');
+                if($paymode==2)
+                {
+                    $bankid=$this->input->post('bankid');
+
+                }
+                else{
+                    $bankid="0" ;
+                }
+
+
 				if ($this->form_validation->run() == FALSE) {
 					$data['user'] = $this->purchase_model->get_purchase_by_id($id);
 					$data['view'] = 'admin/purchase/purchase_edit';
@@ -98,6 +125,7 @@
                         'pur_rate' => $this->input->post('rate'),
                         'pur_amount' => $this->input->post('amount'),
                         'pur_paymode' => $this->input->post('paymentmode'),
+                        'pur_bankid' => $bankid,
                         'pur_payamount' => $this->input->post('amountrecieved'),
                         'pur_updatedate' => date('Y-m-d'),
 					);

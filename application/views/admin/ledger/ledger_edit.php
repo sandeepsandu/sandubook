@@ -35,7 +35,7 @@
                 <label for="firstname" class="col-sm-1 control-label">Date</label>
 
                 <div class="col-sm-3">
-                    <input type="text" name="datepicker" value="<?=$user['led_date'];?>" class="form-control" id="datepicker" placeholder="">
+                    <input type="text" name="datepicker" value="<?=date("d-m-Y", strtotime($user['led_date']));?>" class="form-control" id="datepicker" placeholder="">
                 </div>
             </div>
 
