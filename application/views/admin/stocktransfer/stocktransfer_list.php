@@ -7,7 +7,7 @@
       <h3 class="box-title">Stock Transfer</h3>
 
     </div>
-       <a href="<?= base_url('admin/cashbank'); ?>" class="btn btn-info btn-flat">Add Stock Transfer</a>
+       <a href="<?= base_url('admin/stocktransfer'); ?>" class="btn btn-info btn-flat">Add Stock Transfer</a>
     <!-- /.box-header -->
     <div class="box-body table-responsive">
       <table id="example1" class="table table-bordered table-striped ">

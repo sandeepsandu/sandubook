@@ -9,9 +9,28 @@
             $data2['cbt_cb_id']=$insert_id;
 
             foreach($data2['accname'] as $key => $siblingName) {
+                $acccode = str_split($siblingName, 2);
+               // echo $acccode;
+              //  exit;
+                if($acccode[0]=='BK')
+                {
+                    $transfromtype=1;
+                    $transferid=$acccode[1];
+                }
+                elseif ($acccode[0]=='CU')
+                {
+                    $transfromtype=2;
+                    $transferid=$acccode[1];
+                }
+                else
+                {
+                    $transfromtype=3;
+                    $transferid=$acccode[1];
+                }
                 $dataToSave[] = array(
                     'cbt_cb_id'=>$insert_id,
-                    'cbt_suplr_id' => $siblingName,
+                    'cbt_transfrom_type' => $transfromtype,
+                    'cbt_transfrom_id' => $transferid,
                     'cbt_desc' => $data2['desc'][$key],
                     'cbt_paymenttype' => $data2['paytype'][$key],
                     'cbt_amount' => $data2['amount'][$key],
@@ -53,13 +72,16 @@ $this->db->where('purchase.pur_date <=', $to);
 }
 
         public function get_cashbank_by_id($id){
-			$query = $this->db->get_where('purchase', array('pur_id' => $id));
+			$query = $this->db->get_where('cashbank_entry', array('cb_id' => $id));
 			return $result = $query->row_array();
 		}
-
+    public function get_cashbanktrans_by_id($id){
+    $query = $this->db->get_where('cashbank_transaction', array('cbt_cb_id' => $id));
+    return $result = $query->result_array();
+    }
 		public function edit_cashbank($data, $id){
-			$this->db->where('pur_id', $id);
-			$this->db->update('purchase', $data);
+			$this->db->where('cb_id', $id);
+			$this->db->update('cashbank_entry', $data);
 			return true;
 		}
 

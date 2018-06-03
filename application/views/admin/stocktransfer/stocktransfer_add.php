@@ -5,6 +5,8 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Add New Stock Transfer</h3>
                 </div>
+                <a class="btn btn-info btn-flat" href="<?php echo base_url();?>admin/stocktransfer/stocktransfer_list">View Stock Transfer</a>
+
                 <!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body my-form-body">

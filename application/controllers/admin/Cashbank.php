@@ -6,10 +6,14 @@
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('admin/cashbank_model', 'cashbank_model');
+            $this->load->model('admin/customer_model', 'customer_model');
+            $this->load->model('admin/supplier_model', 'supplier_model');
 		}
 
 		public function index(){
             $data['banklist'] =  $this->cashbank_model->get_all_bank();
+            $data['all_customers'] =  $this->customer_model-> get_all_customers();
+            $data['all_suppliers'] =  $this->supplier_model->get_all_suppliers();
 			$data['view'] = 'admin/cashbank/cashbank_add';
 			$this->load->view('admin/layout', $data);
 		}
@@ -66,8 +70,9 @@
 		}
 
 		public function edit($id = 0){
-            $data['suplr'] =  $this->cashbank_model->get_all_suppliers();
-            $data['godown'] =  $this->cashbank_model->get_all_godowns();
+            $data['banklist'] =  $this->cashbank_model->get_all_bank();
+            $data['all_customers'] =  $this->customer_model-> get_all_customers();
+            $data['all_suppliers'] =  $this->supplier_model->get_all_suppliers();
 			if($this->input->post('submit')){
                 $this->form_validation->set_rules('suplr_name', 'Supplier', 'trim|required');
                 $this->form_validation->set_rules('datepicker', 'Date', 'trim|required');
@@ -102,7 +107,11 @@
 				}
 			}
 			else{
-				$data['user'] = $this->cashbank_model->get_purchase_by_id($id);
+				$data['user'] = $this->cashbank_model->get_cashbank_by_id($id);
+                $data['cbtranslist'] = $this->cashbank_model->get_cashbanktrans_by_id($id);
+               // print_r($data['user']);
+                //print_r($data['cbtrans']);
+             //   exit;
 				$data['view'] = 'admin/cashbank/cashbank_edit';
 				$this->load->view('admin/layout', $data);
 			}

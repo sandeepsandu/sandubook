@@ -47,7 +47,11 @@
                   <button class="add_field_button">Add More</button>
                   <table>
                       <tr>
-                    <td><input type="text" name="accname[]" id="accname" placeholder="Name" class="form-control">
+                          <td><select name="accname[]" id="accnamefirst" class="form-control">
+
+
+                              </select>
+                          </td>
                       <td>  <input type="text" name="desc[]" placeholder="Description" class="form-control">
                       <td>  <select name="paymenttype[]" class="form-control"><option value="1">Paid</option><option value="2">Recieved</option></select>
                       <td>  <input type="text" name="amount[]" placeholder="Amount" class="form-control">
@@ -55,6 +59,8 @@
                   </table>
               </div>
           </div>
+
+
               <div class="form-group">
                 <div class="col-md-11">
                   <input type="submit" name="submit" value="Add" class="btn btn-info pull-right">
@@ -78,9 +84,11 @@ $("#transaction").addClass('active');
 
 <script>
     $('#datepicker').datepicker({
-        autoclose: true,
-        format:"dd-mm-yyyy"
+        autoclose:true,
+        todayHighlight: true,
+        format:'dd-mm-yyyy'
     });
+    $("#datepicker").datepicker("setDate", new Date());
 
 $(document).ready(function() {
 var max_fields      = 10; //maximum input boxes allowed
@@ -92,19 +100,47 @@ $(add_button).click(function(e){ //on add input button click
 e.preventDefault();
 if(x < max_fields){ //max input box allowed
 x++; //text box increment
-$(wrapper).append('<tr><td><input type="text" name="accname[]" placeholder="Name" class="form-control"><td><input class="form-control" type="text" name="desc[]" placeholder="Description"><td><select class="form-control" name="paymenttype[]"><option value="1">Paid</option><option value="2">Recieved</option></select><td><input type="text" class="form-control" name="amount[]" placeholder="Amount"><td><a href="#" class="remove_field">Delete</a></tr>'); //add input box
+    var idname="accname"+x;
+$(wrapper).append('<tr><td><select name="accname[]" id="'+idname+'" class="form-control"> </select><td><input class="form-control" type="text" name="desc[]" placeholder="Description"><td><select class="form-control" name="paymenttype[]"><option value="1">Paid</option><option value="2">Recieved</option></select><td><input type="text" class="form-control" name="amount[]" placeholder="Amount"><td><a href="#" class="remove_field">Delete</a></tr>'); //add input box
 }
+    $('#accname'+x).append(dropdownval);
+    $('#accname'+x).select2({
+        //configuration
+    });
+
 });
 
 $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-e.preventDefault(); $(this).parent('div').remove(); x--;
+    e.preventDefault();  $(this).parent().closest('tr').remove(); x--;
+   // e.preventDefault(); $(this).parent().remove(); x--;
 })
 });
 
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src='<?= base_url() ?>public/dist/js/select2.min.js' type='text/javascript'></script>
+
+<!-- CSS -->
+<link href='<?= base_url() ?>public/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
+
 <script>
 
-    $("#accname").autocomplete({
-        source:  '<?php echo base_url();?>admin/customers/GetCountryName',
-    });
+//    $("#accname").autocomplete({
+//        source:  '<?php //echo base_url();?>//admin/customers/GetCountryName',
+//    });
+
+
+
+
+
+var html  = '<option value="">---Select Name---</option>';
+var dropdownval= '<option value="">---Select Name---</option><?php foreach($banklist as $each){ ?><option value="BK<?php echo $each["bank_id"]; ?>"><?php echo $each["bank_name"]; ?></option><?php }?>';
+
+dropdownval += '<?php foreach($all_customers as $each){ ?><option value="CU<?php echo $each["cust_id"]; ?>"><?php echo $each["cust_name"]; ?></option><?php }?>';
+dropdownval += '<?php foreach($all_suppliers as $each){ ?><option value="SU<?php echo $each["suplr_id"]; ?>"><?php echo $each["suplr_name"]; ?></option><?php }?>';
+
+
+$('#accnamefirst').append(dropdownval);
+// Initialize select2
+$("#accnamefirst").select2();
 </script>
